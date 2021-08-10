@@ -1,0 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class NewBehaviourScript : MonoBehaviour
+{
+//properties, [] affects only the direct property after it
+    [SerializeField]//Expone publicly in the editor the variable, while it maintains the privacy in the program.
+    [Range(0,100)] //this will give slider option for manipulate variable only in this range
+    [Tooltip("Este campo se utiliza para el dinero del jugador.")] //serve for other that will give you hint what this variable means
+    private float _moneyIHaveInMyPocket;
+    public string playerName = "Killer"; //default name
+    // public Rigidbody rb;
+
+    //Getters and Setters
+    //Camel case public version
+    public float moneyIHaveInMyPocket{
+        get{return _moneyIHaveInMyPocket;}
+        set{
+            if(value < 0){
+                _moneyIHaveInMyPocket = 0;
+            }else{
+                _moneyIHaveInMyPocket = value;
+            }
+        }
+        // get => moneyIHaveInMyPocket;
+        // set => moneyIHaveInMyPocket = value;
+    }
+    
+    //returns true | false if the value is less than 5
+    public bool isPoor{
+        get => moneyIHaveInMyPocket < 5;
+    }
+
+
+
+
+
+
+
+
+
+//methods
+    private void Awake() {
+        Debug.Log(message : "This will occure before start-on awake.");
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //Concatenation
+        print(message: "Players has this much money" + moneyIHaveInMyPocket);   
+    }
+
+    // Update is called once per frame  
+    void Update()
+    {
+        print(message:"This is an Update, we are printing a simple message.");
+        Debug.Log(message:"This is an Debug.Log update");
+        Debug.LogError("This way we can write Errors!");
+        Debug.LogWarning("Just testing warning. This time.");
+        
+        //%f = float variable which follows have the value, %s =string, %i = full number
+       //Debug.LogFormat("Dinero en el bolsillo %f ", moneyIHaveInMyPocket); 
+
+        //Reading data from String,Object {0} = first variable after text, {1} = second variable after text, etc
+        Debug.LogFormat("Dinero de {1} es {0} eur ", moneyIHaveInMyPocket, playerName); 
+    }
+
+    
+    private void OnDestroy() {
+        Debug.Log(message : "We are destroyed.");
+    }
+}

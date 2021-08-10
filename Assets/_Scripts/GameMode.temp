@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameMode : MonoBehaviour
+{
+    [SerializeField]
+    private Life playerLife; //uses Class Life with its amount value
+
+    [SerializeField]
+    private Life baseLife;
+
+    private void Awake() {
+        playerLife.onDeath.AddListener(CheckLoseCondition);
+        baseLife.onDeath.AddListener(CheckLoseCondition);
+
+        EnemyManager.SharedInstance.onEnemyChanged.AddListener(CheckWinCondition);
+        WaveManager.SharedInstance.onWaveChanged.AddListener(CheckWinCondition);
+    }
+
+    void CheckLoseCondition(){
+    //PERDER
+        // if(playerLife.Amount <= 0){
+        //     Debug.Log(message:"HEMOS PERDIDO!");
+            SceneManager.LoadScene("LoseScene", LoadSceneMode.Single);
+        // }
+    }
+    void CheckWinCondition(){
+        //????????
+    }
+
+    void Update()
+    {
+        //GANAR
+        if(EnemyManager.SharedInstance.EnemyCount <= 0 && WaveManager.SharedInstance.WavesCount <= 0){
+            Debug.Log(message:"HEMOS GANADO!");
+            //we load another scene this way
+            SceneManager.LoadScene("WinScene", LoadSceneMode.Single); //second parameter can be ADDITIVE MODE(in addiction, we can another scene with it)
+        }
+
+
+    }
+}
